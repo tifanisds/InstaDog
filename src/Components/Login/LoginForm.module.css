@@ -7,6 +7,7 @@
     color: #666;
     padding: 0.5rem 0;
     list-style: 1;
+    margin-top: 1rem;
 }
 
 .esqueceu::after {
