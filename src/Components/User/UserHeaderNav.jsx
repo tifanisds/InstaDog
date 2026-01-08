@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 import { UserContext } from '../../../UserContext'
 import MinhasFotos from '../../Assets/feed.svg?react'
 import Estatisticas from '../../Assets/estatisticas.svg?react'
@@ -7,11 +7,18 @@ import AdicionarFoto from '../../Assets/adicionar.svg?react'
 import Sair from '../../Assets/sair.svg?react'
 import styles from './UserHeaderNav.module.css'
 import { useNavigate } from 'react-router-dom'
+import UseMedia from '../../Hooks/UseMedia'
 
 const UserHeaderNav = () => {
-    const [mobile, setmobile] = React.useState(null)
     const { userLogout } = React.useContext(UserContext)
     const navigate = useNavigate()
+    const mobile = UseMedia('(max-width: 40rem)')
+    const [mobileMenu, setMobileMenu] = React.useState(false)
+
+    const {pathname} = useLocation()
+    useEffect(() => {
+        setMobileMenu(false)
+    }, [pathname])
 
     function handleLogout() {
         userLogout()
@@ -19,27 +26,36 @@ const UserHeaderNav = () => {
     }  
 
   return (
-    <nav className={styles.nav}>
-        <NavLink to='/conta' end>
-            <MinhasFotos />
-            {mobile && 'Minhas Fotos'}
-        </NavLink>
+    <React.Fragment>
+        {mobile && 
+        <button 
+            aria-label='Menu' 
+            className={`${styles.mobileButton} ${mobileMenu && styles.mobileButtonActive}` }
+            onClick={() => setMobileMenu(!mobileMenu)}
+        ></button>}
 
-        <NavLink to='/conta/estatisticas'>
-            <Estatisticas />
-            {mobile && 'Estatísticas'}
-        </NavLink>
+        <nav className={`${mobile ? styles.navMobile : styles.nav } ${mobileMenu && styles.navMobileActive}`}>
+            <NavLink to='/conta' end>
+                <MinhasFotos />
+                {mobile && 'Minhas Fotos'}
+            </NavLink>
 
-        <NavLink to='/conta/postar'>
-            <AdicionarFoto />
-            {mobile && 'Adicionar Foto'}
-            
-        </NavLink>
-        <button onClick={handleLogout}>
-            <Sair />
-            {mobile && 'Sair'}
-        </button>
-    </nav>
+            <NavLink to='/conta/estatisticas'>
+                <Estatisticas />
+                {mobile && 'Estatísticas'}
+            </NavLink>
+
+            <NavLink to='/conta/postar'>
+                <AdicionarFoto />
+                {mobile && 'Adicionar Foto'}
+                
+            </NavLink>
+            <button onClick={handleLogout}>
+                <Sair />
+                {mobile && 'Sair'}
+            </button>
+        </nav>
+    </React.Fragment>
   )
 }
 
