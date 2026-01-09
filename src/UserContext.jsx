@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TOKEN_POST, TOKEN_VALIDATE_POST, USER_GET } from './src/api'
+import { TOKEN_POST, TOKEN_VALIDATE_POST, USER_GET } from './api'
 import { useNavigate } from 'react-router-dom'
 import { use } from 'react'
 

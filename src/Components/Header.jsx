@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './Header.module.css'
 import { Link } from 'react-router-dom'
 import Dogs from '../Assets/dogs.svg?react'
-import { UserContext } from '../../UserContext'
+import { UserContext } from '../UserContext'
 
 export const Header = () => {
   const { data } = React.useContext(UserContext)
