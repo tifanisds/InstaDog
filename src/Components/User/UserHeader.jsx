@@ -9,8 +9,7 @@ export const UserHeader = () => {
 
   React.useEffect(() => {
     setTitle(location.pathname)
-    if('/conta/estatisticas' === location.pathname) setTitle('Estatísticas')
-    else if('/conta' === location.pathname) setTitle('Minhas fotos')
+    if('/conta' === location.pathname) setTitle('Minhas fotos')
     else if('/conta/postar' === location.pathname) setTitle('Poste Sua Foto')
     else setTitle('Minha conta')
   }, [location])
