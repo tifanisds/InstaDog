@@ -3,6 +3,10 @@ import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  base: '/InstaDog/',
+  base: '/InstaDog/', // nome do repo
+  build: {
+    outDir: 'docs',
+  },
   plugins: [react(), svgr()],
 });
+
