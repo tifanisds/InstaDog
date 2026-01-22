@@ -1,16 +1,37 @@
 .photoPost {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
-.photoPost #img {
-    margin-bottom: 1rem;  
+
+
+.dropZone {
+  border: 2px dashed #ccc;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.dropZone p {
+  margin: 0;
+  font-weight: bold;
+}
+
+.dropZone span {
+  font-size: 0.875rem;
+  color: #666;
 }
 
 .file {
-    margin-bottom: 1rem;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
 }
 
 .preview {
@@ -22,6 +43,5 @@
 .preview::after {
     content: '';
     display: block;
-    height: 0px;
     padding-bottom: 100%;
 }

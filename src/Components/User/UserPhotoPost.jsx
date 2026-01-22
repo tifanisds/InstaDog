@@ -13,7 +13,7 @@ const UserPhotoPost = () => {
   const peso = useForm('number')
   const idade = useForm('number')
   const [image, setImg] = React.useState({})
-  const {data, error, loading, request} = useFetch()
+  const { data, error, loading, request } = useFetch()
   const navigate = useNavigate()
 
   React.useEffect(() => {
@@ -22,6 +22,7 @@ const UserPhotoPost = () => {
 
   function handleSubmit(event) {
     event.preventDefault()
+
     const formData = new FormData()
     formData.append('img', image.raw)
     formData.append('nome', nome.value)
@@ -29,18 +30,31 @@ const UserPhotoPost = () => {
     formData.append('idade', idade.value)
 
     const token = window.localStorage.getItem('token')
-    const {url, options} = PHOTO_POST(formData, token)
+    const { url, options } = PHOTO_POST(formData, token)
     request(url, options)
-
   }
 
-  function handleImgChange(event) {
-    const file = event.target.files[0]
+  // 👉 função ÚNICA para tratar o arquivo
+  function handleFile(file) {
+    if (!file) return
 
     setImg({
       preview: URL.createObjectURL(file),
       raw: file,
     })
+  }
+
+  function handleImgChange(event) {
+    handleFile(event.target.files[0])
+  }
+
+  function handleDragOver(event) {
+    event.preventDefault()
+  }
+
+  function handleDrop(event) {
+    event.preventDefault()
+    handleFile(event.dataTransfer.files[0])
   }
 
   return (
@@ -49,23 +63,42 @@ const UserPhotoPost = () => {
         <Input label="Nome" type="text" name="nome" {...nome} />
         <Input label="Peso" type="number" name="peso" {...peso} />
         <Input label="Idade" type="number" name="idade" {...idade} />
-        <input className={styles.file} type="file" name="img" id="img" accept="image/jpeg, image/png" onChange={handleImgChange} />
+
+        {/* DROPZONE */}
+        <div
+          className={styles.dropZone}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          <p>Arraste a imagem aqui</p>
+          <span>ou clique para selecionar</span>
+
+          <input
+            className={styles.file}
+            type="file"
+            name="img"
+            id="img"
+            accept="image/jpeg, image/png"
+            onChange={handleImgChange}
+          />
+        </div>
+
         {loading ? <Button disabled>Postar</Button> : <Button>Postar</Button>}
         <Error />
-        
       </form>
-      <div> 
-        {image.preview && 
-          <div  
-            className={styles.preview} 
-            style={{backgroundImage: `url(${image.preview})`}}
-          ></div>}
+
+      <div>
+        {image.preview && (
+          <div
+            className={styles.preview}
+            style={{ backgroundImage: `url(${image.preview})` }}
+          />
+        )}
       </div>
+
       {loading && <p>Enviando...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {data && <p>Foto enviada com sucesso ✅</p>}
-
-      
     </section>
   )
 }
