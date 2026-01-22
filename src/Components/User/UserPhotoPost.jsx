@@ -34,7 +34,6 @@ const UserPhotoPost = () => {
     request(url, options)
   }
 
-  // 👉 função ÚNICA para tratar o arquivo
   function handleFile(file) {
     if (!file) return
 
@@ -59,7 +58,7 @@ const UserPhotoPost = () => {
 
   return (
     <section className={`${styles.photoPost} animeLeft`}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <Input label="Nome" type="text" name="nome" {...nome} />
         <Input label="Peso" type="number" name="peso" {...peso} />
         <Input label="Idade" type="number" name="idade" {...idade} />
@@ -87,7 +86,7 @@ const UserPhotoPost = () => {
         <Error />
       </form>
 
-      <div>
+      <div className={styles.previewWrapper}  >
         {image.preview && (
           <div
             className={styles.preview}

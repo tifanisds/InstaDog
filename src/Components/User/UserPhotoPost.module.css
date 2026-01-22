@@ -6,6 +6,28 @@
 }
 
 
+.form {
+  order: 1;
+}
+
+.previewWrapper {
+  order: 2;
+}
+
+@media (max-width: 768px) {
+  .photoPost {
+    grid-template-columns: 1fr;
+  }
+
+  .form {
+    order: 2;
+  }
+
+  .previewWrapper {
+    order: 1;
+  }
+}
+
 
 .dropZone {
   border: 2px dashed #ccc;
